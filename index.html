@@ -1,514 +1,203 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Qwen 作品集</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>埃塞俄比亚五族群基因组多样性与群体历史解析</title>
   <style>
-    /* ============ Reset & Base ============ */
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
     :root {
-      --bg: #0b0f19;
-      --surface: #141a2b;
-      --card: #1a2138;
-      --border: #263150;
-      --text: #e2e8f0;
-      --muted: #8892b0;
-      --accent: #64ffda;
-      --accent2: #7c3aed;
-      --accent3: #f472b6;
-      --accent4: #facc15;
-      --gradient: linear-gradient(135deg, #64ffda, #7c3aed, #f472b6);
+      --bg-primary: #ffffff;
+      --bg-secondary: #f7f8fa;
+      --text-primary: #111111;
+      --text-secondary: #555555;
+      --accent: #2b2d42;
+      --border: #e1e4e8;
+      --code-bg: #f0f2f5;
+      --font-serif: "Georgia", "Noto Serif SC", "SimSun", serif;
+      --font-sans: "Inter", "Helvetica Neue", "Noto Sans SC", "PingFang SC", sans-serif;
+      --font-mono: "JetBrains Mono", "Fira Code", "Consolas", monospace;
+      --spacing: 1.5rem;
+      --max-width: 920px;
     }
-
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
-
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-        "Noto Sans SC", sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.7;
-      overflow-x: hidden;
+      font-family: var(--font-sans);
+      color: var(--text-primary);
+      background: var(--bg-primary);
+      line-height: 1.65;
+      font-size: 15px;
+      -webkit-font-smoothing: antialiased;
     }
+    .container { max-width: var(--max-width); margin: 0 auto; padding: 0 2rem; }
+    
+    /* Header */
+    header { padding: 3rem 0 2rem; border-bottom: 2px solid var(--accent); }
+    h1 { font-family: var(--font-serif); font-size: 1.85rem; font-weight: 700; letter-spacing: 0.02em; margin-bottom: 0.4rem; }
+    .meta { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.5rem; }
+    .course { font-family: var(--font-mono); font-size: 0.85rem; background: var(--bg-secondary); padding: 0.2rem 0.5rem; border: 1px solid var(--border); display: inline-block; margin-top: 0.5rem; }
 
-    a { color: var(--accent); text-decoration: none; transition: .25s; }
-    a:hover { opacity: .8; }
+    /* Navigation */
+    nav { background: var(--bg-primary); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; padding: 0.8rem 0; }
+    nav ul { list-style: none; display: flex; flex-wrap: wrap; justify-content: center; gap: 1.2rem; }
+    nav a { text-decoration: none; color: var(--text-secondary); font-size: 0.85rem; font-weight: 500; padding-bottom: 2px; border-bottom: 2px solid transparent; transition: all 0.2s; }
+    nav a:hover { color: var(--accent); border-bottom-color: var(--accent); }
 
-    section { padding: 100px 5%; max-width: 1200px; margin: auto; }
+    /* Sections */
+    section { padding: 2.5rem 0; border-bottom: 1px solid var(--border); }
+    section:last-of-type { border-bottom: none; }
+    h2 { font-family: var(--font-serif); font-size: 1.35rem; font-weight: 600; color: var(--accent); margin-bottom: 1.2rem; padding-left: 1rem; border-left: 4px solid var(--accent); }
+    h3 { font-size: 1.05rem; font-weight: 600; margin: 1.8rem 0 0.8rem; color: var(--text-primary); }
+    p { margin-bottom: 1rem; text-align: justify; }
+    
+    /* Tables & Code */
+    table { width: 100%; border-collapse: collapse; margin: 1.2rem 0; font-size: 0.9rem; }
+    th, td { padding: 0.7rem 0.8rem; border: 1px solid var(--border); text-align: left; vertical-align: top; }
+    th { background: var(--bg-secondary); font-weight: 600; color: var(--text-primary); }
+    .code-block { background: var(--code-bg); padding: 1rem; border-radius: 4px; font-family: var(--font-mono); font-size: 0.85rem; overflow-x: auto; border: 1px solid var(--border); margin: 1rem 0; white-space: pre-wrap; }
+    .highlight { background: #eef1f6; padding: 0.15rem 0.35rem; border-radius: 3px; font-family: var(--font-mono); font-size: 0.9em; }
+    
+    /* Lists */
+    ul, ol { margin: 0.8rem 0 1.2rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    
+    /* Footer */
+    footer { padding: 2rem 0 3rem; font-size: 0.85rem; color: var(--text-secondary); text-align: center; border-top: 1px solid var(--border); margin-top: 1rem; }
+    footer a { color: var(--accent); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
 
-    /* ============ Navbar ============ */
-    nav {
-      position: fixed; top: 0; left: 0; width: 100%; z-index: 100;
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 18px 5%; backdrop-filter: blur(12px);
-      background: rgba(11,15,25,.75); border-bottom: 1px solid var(--border);
-    }
-    .logo {
-      font-size: 1.5rem; font-weight: 800;
-      background: var(--gradient); -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .nav-links { display: flex; gap: 32px; list-style: none; }
-    .nav-links a { color: var(--muted); font-weight: 500; font-size: .95rem; }
-    .nav-links a:hover { color: var(--accent); }
-
-    /* ============ Hero ============ */
-    .hero {
-      min-height: 100vh; display: flex; flex-direction: column;
-      justify-content: center; align-items: flex-start; gap: 20px;
-    }
-    .hero .greeting {
-      color: var(--accent); font-family: monospace; font-size: 1.1rem;
-    }
-    .hero h1 {
-      font-size: clamp(2.5rem, 6vw, 5rem); font-weight: 900;
-      line-height: 1.15;
-    }
-    .hero h1 .highlight {
-      background: var(--gradient); -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .hero h2 {
-      font-size: clamp(1.5rem, 4vw, 3rem); color: var(--muted);
-      font-weight: 600;
-    }
-    .hero p {
-      max-width: 540px; color: var(--muted); font-size: 1.1rem;
-    }
-    .hero .cta {
-      margin-top: 18px; padding: 14px 36px; border: 1.5px solid var(--accent);
-      border-radius: 6px; color: var(--accent); font-size: 1rem;
-      background: transparent; cursor: pointer; transition: .3s;
-    }
-    .hero .cta:hover { background: rgba(100,255,218,.1); }
-
-    /* ============ Section Title ============ */
-    .section-title {
-      display: flex; align-items: center; gap: 12px;
-      margin-bottom: 50px; font-size: 1.6rem; font-weight: 700;
-    }
-    .section-title::before {
-      content: ''; counter-increment: section;
-    }
-    .section-title .num {
-      color: var(--accent); font-family: monospace; font-size: 1.2rem;
-    }
-    .section-title .line {
-      flex: 1; height: 1px; background: var(--border); margin-left: 12px;
-    }
-
-    /* ============ Portfolio Grid ============ */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-      gap: 28px;
-    }
-
-    .card {
-      background: var(--card); border-radius: 12px; overflow: hidden;
-      border: 1px solid var(--border);
-      transition: transform .35s, box-shadow .35s;
-      position: relative;
-    }
-    .card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 20px 40px rgba(0,0,0,.4);
-    }
-
-    .card-header {
-      height: 180px; display: flex; align-items: center;
-      justify-content: center; font-size: 3.5rem; position: relative;
-      overflow: hidden;
-    }
-    .card-header .icon { position: relative; z-index: 2; }
-
-    .card:nth-child(1) .card-header {
-      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-    }
-    .card:nth-child(2) .card-header {
-      background: linear-gradient(135deg, #1a002e, #3b1363, #5b2586);
-    }
-    .card:nth-child(3) .card-header {
-      background: linear-gradient(135deg, #2e0000, #5c1a1a, #8b2f2f);
-    }
-    .card:nth-child(4) .card-header {
-      background: linear-gradient(135deg, #0a2e00, #1a5c1a, #2f8b2f);
-    }
-    .card:nth-child(5) .card-header {
-      background: linear-gradient(135deg, #2e2e00, #5c5c1a, #8b8b2f);
-    }
-    .card:nth-child(6) .card-header {
-      background: linear-gradient(135deg, #001e2e, #1a3c5c, #2f6b8b);
-    }
-
-    .card-body { padding: 24px; }
-    .card-body .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
-    .tag {
-      font-family: monospace; font-size: .78rem; color: var(--accent);
-      background: rgba(100,255,218,.07); padding: 3px 10px; border-radius: 20px;
-    }
-    .card-body h3 { font-size: 1.2rem; margin-bottom: 8px; }
-    .card-body p { color: var(--muted); font-size: .92rem; }
-
-    .card-footer {
-      padding: 0 24px 20px; display: flex; gap: 16px;
-    }
-    .card-footer a {
-      color: var(--text); font-size: 1.2rem; transition: .2s;
-    }
-    .card-footer a:hover { color: var(--accent); }
-
-    /* ============ Stats ============ */
-    .stats {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr));
-      gap: 24px; margin-top: 60px; text-align: center;
-    }
-    .stat {
-      background: var(--card); border: 1px solid var(--border);
-      border-radius: 12px; padding: 32px 20px;
-    }
-    .stat .number {
-      font-size: 2.5rem; font-weight: 800;
-      background: var(--gradient); -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .stat .label { color: var(--muted); font-size: .9rem; margin-top: 6px; }
-
-    /* ============ Skills ============ */
-    .skills-list { list-style: none; display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-    .skills-list li::before {
-      content: '▹'; color: var(--accent); margin-right: 10px;
-    }
-    .skills-section {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: start;
-    }
-    .skills-text { color: var(--muted); font-size: 1rem; }
-    .skills-text p { margin-bottom: 18px; }
-
-    /* ============ About ============ */
-    .about-content {
-      display: grid; grid-template-columns: 3fr 2fr; gap: 50px;
-      align-items: center;
-    }
-    .about-text { color: var(--muted); font-size: 1rem; }
-    .about-text p { margin-bottom: 16px; }
-    .about-image {
-      aspect-ratio: 1; border-radius: 12px; overflow: hidden;
-      position: relative; max-width: 300px; margin: auto;
-    }
-    .about-image .placeholder {
-      width: 100%; height: 100%;
-      background: linear-gradient(135deg, var(--accent2), var(--accent3));
-      display: flex; align-items: center; justify-content: center;
-      font-size: 6rem; border-radius: 12px;
-    }
-    .about-image::after {
-      content: ''; position: absolute; inset: 0;
-      border: 2px solid var(--accent); border-radius: 12px;
-      transform: translate(16px, 16px); z-index: -1; transition: .3s;
-    }
-    .about-image:hover::after { transform: translate(10px, 10px); }
-
-    /* ============ Contact ============ */
-    .contact { text-align: center; max-width: 600px; }
-    .contact h2 { font-size: 2rem; margin-bottom: 20px; }
-    .contact p { color: var(--muted); margin-bottom: 36px; }
-    .contact .cta {
-      display: inline-block; padding: 16px 48px; border: 1.5px solid var(--accent);
-      border-radius: 6px; color: var(--accent); font-size: 1rem;
-      background: transparent; cursor: pointer; transition: .3s;
-    }
-    .contact .cta:hover { background: rgba(100,255,218,.1); }
-
-    /* ============ Footer ============ */
-    footer {
-      text-align: center; padding: 28px 5%; color: var(--muted);
-      font-size: .85rem; border-top: 1px solid var(--border);
-      margin-top: 40px;
-    }
-    footer .social-links { display: flex; justify-content: center; gap: 24px; margin-bottom: 12px; }
-    footer .social-links a { font-size: 1.2rem; }
-
-    /* ============ Responsive ============ */
-    @media (max-width: 768px) {
-      .nav-links { display: none; }
-      .skills-section, .about-content { grid-template-columns: 1fr; }
-      .grid { grid-template-columns: 1fr; }
-      .skills-list { grid-template-columns: 1fr; }
-      section { padding: 70px 5%; }
-    }
-
-    /* ============ Animations ============ */
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-    }
-    .card-header .icon { animation: float 4s ease-in-out infinite; }
-
-    /* Scroll reveal */
-    .reveal {
-      opacity: 0; transform: translateY(40px);
-      transition: opacity .7s ease, transform .7s ease;
-    }
-    .reveal.visible {
-      opacity: 1; transform: translateY(0);
+    /* Responsive */
+    @media (max-width: 700px) {
+      .container { padding: 0 1.2rem; }
+      h1 { font-size: 1.5rem; }
+      nav ul { gap: 0.6rem; }
+      table { font-size: 0.8rem; }
+      th, td { padding: 0.5rem; }
     }
   </style>
 </head>
 <body>
 
-  <!-- ========== Nav ========== -->
-  <nav>
-    <div class="logo">QWEN</div>
-    <ul class="nav-links">
-      <li><a href="#about">关于</a></li>
-      <li><a href="#portfolio">作品集</a></li>
-      <li><a href="#skills">能力</a></li>
-      <li><a href="#contact">联系</a></li>
+<header>
+  <div class="container">
+    <h1>埃塞俄比亚五族群基因组多样性与群体历史解析</h1>
+    <div class="meta">作者：Xingguang Cai &nbsp;|&nbsp; 课程：ANT157L Population Genetics</div>
+    <div class="meta">数据范围：Ethiopians_chr1 / Genome-wide SNP Arrays / BMI Phenotype</div>
+    <div class="course">PLINK | ADMIXTURE | GCTA | KING | R/ggplot2</div>
+  </div>
+</header>
+
+<nav>
+  <div class="container">
+    <ul>
+      <li><a href="#abstract">研究概要</a></li>
+      <li><a href="#methods">数据质控与流程</a></li>
+      <li><a href="#structure">群体结构解析</a></li>
+      <li><a href="#roh">ROH与近交评估</a></li>
+      <li><a href="#fst">遗传分化与选择</a></li>
+      <li><a href="#heritability">遗传力估计</a></li>
+      <li><a href="#discussion">讨论与启示</a></li>
     </ul>
-  </nav>
+  </div>
+</nav>
 
-  <!-- ========== Hero ========== -->
-  <section class="hero">
-    <p class="greeting">你好，我是</p>
-    <h1><span class="highlight">Qwen</span></h1>
-    <h2>探索 AI 的无限可能。</h2>
-    <p>
-      我是由通义实验室开发的大语言模型。我擅长代码生成、创意写作、数据分析、
-      多语言翻译、数学推理等多种任务——用智能，为你赋能。
-    </p>
-    <a href="#portfolio" class="cta">查看作品集 ↓</a>
+<main class="container">
+  <section id="abstract">
+    <h2>研究概要</h2>
+    <p>本研究基于埃塞俄比亚五个本土族群（Bench, Sheko, Chabu, Majang, Shekkacho）的SNP芯片基因组数据，系统开展群体结构推断、近交水平量化、遗传分化评估及复杂性状遗传力分析。研究旨在揭示东非人群的内部遗传架构、历史迁徙痕迹与局部适应信号，验证群体遗传学核心工具在非洲数据中的适用性，并为跨人群精准医学提供方法学与实证基准。</p>
   </section>
 
-  <!-- ========== About ========== -->
-  <section id="about">
-    <h2 class="section-title"><span class="num">01.</span> 关于我</h2>
-    <div class="about-content reveal">
-      <div class="about-text">
-        <p>
-          我是一个大型语言模型，经过海量文本和代码的训练，能够理解和生成自然语言、
-          编写和调试代码、进行逻辑推理与数学计算、创作诗歌和故事、翻译数十种语言等等。
-        </p>
-        <p>
-          我的设计理念是成为一个有用、安全、诚实的智能助手，无论是在日常对话、
-          专业开发还是学术研究中，都能提供高效、精准的协助。
-        </p>
-        <p>
-          以下是我在各个领域的能力展示——每一份"作品"都体现了我的多面性和创造力。
-        </p>
-      </div>
-      <div class="about-image">
-        <div class="placeholder">🤖</div>
-      </div>
-    </div>
+  <section id="methods">
+    <h2>数据质控与分析流程</h2>
+    <p>原始数据经严格质量控制后进入下游分析，核心过滤阈值与保留规模如下：</p>
+    <table>
+      <thead><tr><th>质控步骤</th><th>PLINK参数</th><th>过滤标准</th><th>保留规模</th></tr></thead>
+      <tbody>
+        <tr><td>原始数据</td><td><code>--bfile</code></td><td>-</td><td>59,451 SNPs (Chr1)</td></tr>
+        <tr><td>缺失率过滤</td><td><code>--geno 0.02</code></td><td>SNP缺失率 ≤ 2%</td><td>57,211 SNPs</td></tr>
+        <tr><td>MAF过滤</td><td><code>--maf 0.05</code></td><td>次要等位基因频率 ≥ 5%</td><td>43,001 SNPs</td></tr>
+        <tr><td>HWE过滤</td><td><code>--hwe 0.0001</code></td><td>Hardy-Weinberg p > 10⁻⁴</td><td>族群特异性移除 2–21 个位点</td></tr>
+        <tr><td>性别校正</td><td>手动核查 <code>.fam</code></td><td>修正缺失性别编码</td><td>270 个体 (143M / 127F)</td></tr>
+      </tbody>
+    </table>
+    <div class="code-block">plink --bfile Ethiopians_chr1 --geno 0.02 --maf 0.05 --hwe 0.0001 --make-bed --out Ethiopians_chr1_qc</div>
   </section>
 
-  <!-- ========== Portfolio ========== -->
-  <section id="portfolio">
-    <h2 class="section-title"><span class="num">02.</span> 作品集</h2>
-    <div class="grid">
-
-      <div class="card reveal">
-        <div class="card-header"><span class="icon">💻</span></div>
-        <div class="card-body">
-          <div class="tags">
-            <span class="tag">Python</span>
-            <span class="tag">JavaScript</span>
-            <span class="tag">C++</span>
-          </div>
-          <h3>全栈代码生成</h3>
-          <p>从零构建 Web 应用、算法实现、系统架构设计，支持 100+ 编程语言。</p>
-        </div>
-        <div class="card-footer">
-          <a href="#" title="代码">📂</a>
-          <a href="#" title="详情">🔗</a>
-        </div>
-      </div>
-
-      <div class="card reveal">
-        <div class="card-header"><span class="icon">✍️</span></div>
-        <div class="card-body">
-          <div class="tags">
-            <span class="tag">创意写作</span>
-            <span class="tag">文案</span>
-            <span class="tag">诗歌</span>
-          </div>
-          <h3>创意内容创作</h3>
-          <p>撰写小说、诗歌、广告文案、剧本——从灵感火花到完整作品。</p>
-        </div>
-        <div class="card-footer">
-          <a href="#" title="预览">👁️</a>
-          <a href="#" title="详情">🔗</a>
-        </div>
-      </div>
-
-      <div class="card reveal">
-        <div class="card-header"><span class="icon">📊</span></div>
-        <div class="card-body">
-          <div class="tags">
-            <span class="tag">数据分析</span>
-            <span class="tag">可视化</span>
-            <span class="tag">统计</span>
-          </div>
-          <h3>数据分析与可视化</h3>
-          <p>清洗数据、构建统计模型、生成可视化图表，让数据讲述故事。</p>
-        </div>
-        <div class="card-footer">
-          <a href="#" title="笔记本">📓</a>
-          <a href="#" title="详情">🔗</a>
-        </div>
-      </div>
-
-      <div class="card reveal">
-        <div class="card-header"><span class="icon">🌍</span></div>
-        <div class="card-body">
-          <div class="tags">
-            <span class="tag">翻译</span>
-            <span class="tag">中英互译</span>
-            <span class="tag">多语言</span>
-          </div>
-          <h3>多语言翻译</h3>
-          <p>支持中、英、日、法、德、西等 100+ 语种的高质量翻译与本地化。</p>
-        </div>
-        <div class="card-footer">
-          <a href="#" title="示例">📝</a>
-          <a href="#" title="详情">🔗</a>
-        </div>
-      </div>
-
-      <div class="card reveal">
-        <div class="card-header"><span class="icon">🧮</span></div>
-        <div class="card-body">
-          <div class="tags">
-            <span class="tag">数学</span>
-            <span class="tag">逻辑推理</span>
-            <span class="tag">科学</span>
-          </div>
-          <h3>数学与逻辑推理</h3>
-          <p>解答高等数学问题、逻辑谜题、科学计算，提供分步骤推理过程。</p>
-        </div>
-        <div class="card-footer">
-          <a href="#" title="推导">📐</a>
-          <a href="#" title="详情">🔗</a>
-        </div>
-      </div>
-
-      <div class="card reveal">
-        <div class="card-header"><span class="icon">🎯</span></div>
-        <div class="card-body">
-          <div class="tags">
-            <span class="tag">对话</span>
-            <span class="tag">助手</span>
-            <span class="tag">教育</span>
-          </div>
-          <h3>智能对话助手</h3>
-          <p>自然流畅的多轮对话、角色扮演、教学辅导、问答系统。</p>
-        </div>
-        <div class="card-footer">
-          <a href="#" title="体验">💬</a>
-          <a href="#" title="详情">🔗</a>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- Stats -->
-    <div class="stats reveal">
-      <div class="stat">
-        <div class="number">100+</div>
-        <div class="label">支持的语言</div>
-      </div>
-      <div class="stat">
-        <div class="number">∞</div>
-        <div class="label">创意可能</div>
-      </div>
-      <div class="stat">
-        <div class="number">24/7</div>
-        <div class="label">全天候在线</div>
-      </div>
-      <div class="stat">
-        <div class="number">&lt;1s</div>
-        <div class="label">响应速度</div>
-      </div>
-    </div>
+  <section id="structure">
+    <h2>群体结构解析</h2>
+    <h3>主成分分析 (PCA)</h3>
+    <p>基于LD修剪后数据集（<code>--indep-pairwise 50 40 0.5</code>）提取前4个主成分。PC1有效分离Chabu与其他四族群；Bench与Sheko在遗传空间中高度重叠，提示近期高频基因流或共同祖先背景。PC3-PC4方差贡献递减，未揭示额外强亚结构。</p>
+    
+    <h3>祖先成分推断 (ADMIXTURE)</h3>
+    <p>运行 K=2 至 K=6 的无监督聚类。随K值增加，Chabu内部呈现特异性祖先信号（K=5,6出现独立簇），符合其狩猎采集历史与小有效群体规模；Bench/Sheko始终保持高度相似的比例谱系。K=2时全局Fst估计值为 <span class="highlight">0.063</span>，属中等群体分化水平。</p>
   </section>
 
-  <!-- ========== Skills ========== -->
-  <section id="skills">
-    <h2 class="section-title"><span class="num">03.</span> 核心能力</h2>
-    <div class="skills-section reveal">
-      <div class="skills-text">
-        <p>
-          我拥有广泛的知识和能力矩阵，能够胜任从简单问答到复杂系统设计的多种任务。
-          下面列出了我最常用的核心技能：
-        </p>
-        <ul class="skills-list">
-          <li>自然语言理解与生成</li>
-          <li>代码编写与调试</li>
-          <li>数学计算与推理</li>
-          <li>多语言翻译</li>
-          <li>创意写作</li>
-          <li>数据分析</li>
-          <li>知识问答</li>
-          <li>逻辑推理</li>
-          <li>文本摘要</li>
-          <li>API 集成</li>
-          <li>文档撰写</li>
-          <li>学习辅导</li>
-        </ul>
-      </div>
-      <div class="skills-text">
-        <p>
-          我的优势在于 <strong style="color:var(--accent)">多模态理解</strong>、
-          <strong style="color:var(--accent2)">长上下文窗口</strong>、
-          <strong style="color:var(--accent3)">深度推理能力</strong> 以及
-          <strong style="color:var(--accent4)">精准的工具调用</strong>。
-          这些能力使我能够在复杂场景中提供高质量输出。
-        </p>
-        <p>
-          此外，我注重安全性和对齐性，遵循有益、诚实、无害的原则，
-          确保每一次交互都值得信赖。
-        </p>
-      </div>
-    </div>
+  <section id="roh">
+    <h2>ROH与近交评估</h2>
+    <p>采用PLINK <code>--homozyg</code>模块检测纯合子片段，参数灵敏度测试表明阈值选择显著影响近交代理指标：</p>
+    <table>
+      <thead><tr><th>参数设定</th><th>中位cROH (kb)</th><th>中位片段数</th><th>生物学解释</th></tr></thead>
+      <tbody>
+        <tr><td>≥1000 kb, 允许1杂合</td><td>35,448</td><td>18</td><td>聚焦近期/中度近交，降低随机同合噪声</td></tr>
+        <tr><td>≥500 kb, 允许1杂合</td><td>78,177</td><td>81</td><td>捕获更多古老漂变累积的同合片段</td></tr>
+        <tr><td>≥1000 kb, 0杂合容忍</td><td>27,010</td><td>13</td><td>严格标准，仅保留最长/最完整同合区</td></tr>
+      </tbody>
+    </table>
+    <p><strong>表型关联检验：</strong>Chabu族群中身高与cROH的Pearson相关系数 <span class="highlight">r = -0.073 (p > 0.05)</span>，未检测到显著近交衰退信号。与McQuillan et al. (2012)欧洲队列结果（r ≈ -0.15）存在差异，可能受群体历史负荷、环境协变量掩盖或样本功效限制影响。</p>
+    <p><strong>近交系数分解：</strong>最高cROH个体 fROH = 0.085。在Ne=500, t=20假设下，Fst = 0.0198，推导Fis = 0.0668。Fis > Fst 提示该个体同合性主要源于近期家系近交而非纯群体漂变。</p>
   </section>
 
-  <!-- ========== Contact ========== -->
-  <section id="contact" class="contact reveal">
-    <h2>开始对话</h2>
-    <p>
-      无论你是需要代码帮助、创意灵感还是深度对话，我都在这里。
-      告诉我你的需求，我们一起实现它。
-    </p>
-    <a href="#" class="cta">发起对话 💬</a>
+  <section id="fst">
+    <h2>遗传分化与选择信号</h2>
+    <h3>全基因组Fst分布</h3>
+    <p>Hudson估计量计算成对群体分化指数：</p>
+    <table>
+      <thead><tr><th>群体对</th><th>Fst值</th><th>进化解读</th></tr></thead>
+      <tbody>
+        <tr><td>Bench – Sheko</td><td>0.0033</td><td>极低分化，地理邻近维持高频基因流</td></tr>
+        <tr><td>Shekkacho – Chabu</td><td>0.0622</td><td>最高分化，长期隔离与小Ne导致遗传漂变累积</td></tr>
+      </tbody>
+    </table>
+    
+    <h3>高分化候选位点</h3>
+    <p>设定Fst > 0.5阈值扫描局部选择信号：</p>
+    <ul>
+      <li><code>rs2814778</code> (Fst = 0.512)：位于 <em>ACKR1</em> 基因（Duffy血型抗原）。已知与疟疾抗性相关，非洲人群抗性等位基因高频提示正向选择。</li>
+      <li><code>rs4864311</code> (Fst = 0.588)：位于基因间区，等位基因频率高度分化，需结合功能基因组学进一步验证。</li>
+    </ul>
   </section>
 
-  <!-- ========== Footer ========== -->
-  <footer>
-    <div class="social-links">
-      <a href="#" title="GitHub">🐙</a>
-      <a href="#" title="Twitter">🐦</a>
-      <a href="#" title="LinkedIn">💼</a>
-      <a href="#" title="邮箱">📧</a>
-    </div>
-    <p>Designed &amp; Built by <strong>Qwen</strong> · © 2026</p>
-  </footer>
+  <section id="heritability">
+    <h2>复杂性状遗传力估计</h2>
+    <p>使用GCTA基于SNP遗传相关矩阵（GRM）估计BMI的狭义遗传力（h²SNP），验证亲缘关系剔除阈值对估计稳健性的影响：</p>
+    <table>
+      <thead><tr><th>GRM剔除阈值</th><th>保留个体数</th><th>h²SNP估计值</th><th>标准误 (SE)</th><th>方法学解读</th></tr></thead>
+      <tbody>
+        <tr><td>≥ 0.10 (剔除二级以上)</td><td>547</td><td>0.999</td><td>0.541</td><td>高估风险：残留环境共变与远缘结构混杂</td></tr>
+        <tr><td>≥ 0.50 (仅剔除一级)</td><td>1,038</td><td>0.441</td><td>0.208</td><td>更稳健估计，但SE仍偏大，提示需扩大非洲参考面板</td></tr>
+      </tbody>
+    </table>
+  </section>
 
-  <!-- ========== JS: Scroll Reveal ========== -->
-  <script>
-    const reveals = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.15 });
-    reveals.forEach(el => observer.observe(el));
-  </script>
+  <section id="discussion">
+    <h2>讨论与学术启示</h2>
+    <ol>
+      <li><strong>群体连续性假说验证：</strong>PCA与ADMIXTURE结果共同表明人类遗传变异呈渐变谱系，挑战离散“种族”分类范式。</li>
+      <li><strong>近交-表型关联的语境依赖性：</strong>身高与ROH缺乏相关性提示，近交衰退效应的可检测性高度依赖于群体历史负荷、性状多基因架构及环境背景。</li>
+      <li><strong>局部适应的实证支持：</strong><em>ACKR1</em> 等位基因频率的极端分化印证了病原体驱动的正向选择在不同生态压力下的族群特异性轨迹。</li>
+      <li><strong>方法学基准意义：</strong>系统评估了PLINK/GCTA/KING在非洲数据中的参数敏感性，为后续跨大陆比较研究提供可复现流程与阈值参考。</li>
+    </ol>
+    <h3>研究局限</h3>
+    <p>SNP芯片仅覆盖常见变异；表型维度有限；缺乏显式人口历史模型（如∂a∂i/MSMC）与古基因组交叉验证。未来需整合全基因组测序与多组学数据，以解析隐性变异负荷与基因型-环境互作机制。</p>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <p>© 2025 Xingguang Cai | ANT157L Problem Set Series | Generated for Academic Review</p>
+    <p style="margin-top:0.5rem;">核心工具：PLINK 1.9/2.0 • ADMIXTURE • GCTA 1.93 • KING • Pong • R/ggplot2</p>
+  </div>
+</footer>
 
 </body>
 </html>
